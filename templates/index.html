@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><a href="{% url 'form' %}"> froms</a></h1><br>
+    <h1><a href="{% url 'index' %}"> index</a></h1>
+    <br>
+<form action = "{% url 'index' %}" method="POST">
+{% csrf_token %}
+<select name="status" class="fetchval" id="fetchval" onchange="this.form.submit()">
+    <option disabled  selected>All Users</option>
+    <option value="1">blocked</option>
+    <option value="2">unblocked</option>
+    <option value="3">Subscribed</option>
+</select>
+</form>
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>subject</td>
+        <td>marks</td>
+        <td>Actions</td>
+    </tr>
+    {% for i in data  %}
+    <tr>
+        <td>{{i.id}}</td>
+        <td>{{ i.name }}</td>
+        <td>{{i.subject}} </td>
+        <td>{{i.marks}}</td>
+        <td><input type="checkbox" name="product_id[]" value="{{ i.id }}" id="delete_product"> </td>
+    </tr>
+    {% endfor %}
+</table>
+<h1><button type="submit" class="btn_delete" >Delete</button></h1>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+
+$(document).ready(function(){
+    $('.btn_delete').click(function(){
+        if(confirm("are u sure")){
+            var id=[];
+            $(':checkbox:checked').each(function(i){
+                id[i]=$(this).val()
+                alert(id)
+            })
+            if(id.length===0){
+                alert("plz select someting")
+            }else{
+                console.log(id)
+            }
+        }
+    });
+});
+
+</script>
+
+{% comment %} <script>
+
+$(document).ready(function(){
+    $('.btn_delete').click(function(){
+    }
+</script> {% endcomment %}
